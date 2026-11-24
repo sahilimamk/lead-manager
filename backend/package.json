@@ -1,0 +1,1 @@
+{"dependencies":{"cors":"^2.8.5","express":"^4.21.2"},"description":"Lead Manager API — Express + SQLite","devDependencies":{"jest":"^29.7.0","supertest":"^7.0.0"},"main":"server.js","name":"lead-manager-backend","scripts":{"dev":"node server.js","start":"node server.js","test":"jest --runInBand"},"version":"1.0.0"}
