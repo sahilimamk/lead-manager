@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SOURCES, STATUSES } from "./api.js";
 
 const emptyForm = {
@@ -32,6 +32,15 @@ export default function LeadForm({ editing, onSave, onCancel, saving }) {
   const [errors, setErrors] = useState({});
   const [serverError, setServerError] = useState("");
 
+  // When the user picks a different lead to edit (or goes back to adding),
+  // fill the form with that lead. Without this, the form keeps whatever was
+  // typed last, so editing one lead would show another lead's details.
+  useEffect(() => {
+    setForm(editing || emptyForm);
+    setErrors({});
+    setServerError("");
+  }, [editing]);
+
   function change(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
@@ -44,6 +53,7 @@ export default function LeadForm({ editing, onSave, onCancel, saving }) {
     setServerError("");
     try {
       await onSave(form);
+      if (!editing) setForm(emptyForm);
     } catch (err) {
       setServerError(err.message);
     }
